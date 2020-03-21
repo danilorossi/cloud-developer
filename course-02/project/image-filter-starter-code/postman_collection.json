@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "304f0aab-8f65-46a7-84a0-31f15c3906f4",
+		"name": "Udacity Image Filter Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET /",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /filteredimage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/filteredimage",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"filteredimage"
+					]
+				},
+				"description": "Project endpoint"
+			},
+			"response": []
+		},
+		{
+			"name": "GET /filteredimage? image_url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/filteredimage?image_url=https://i.pinimg.com/originals/99/11/c9/9911c90154c8560f06ebe1e07a310f88.jpg",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"filteredimage"
+					],
+					"query": [
+						{
+							"key": "image_url",
+							"value": "https://i.pinimg.com/originals/99/11/c9/9911c90154c8560f06ebe1e07a310f88.jpg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /filteredimage - invalid URL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/filteredimage?image_url=https://i.pinimg.com/originals/99/11/c9/9911c90154c8560f06ebe1e07a310f88.jpg",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"filteredimage"
+					],
+					"query": [
+						{
+							"key": "image_url",
+							"value": "https://i.pinimg.com/originals/99/11/c9/9911c90154c8560f06ebe1e07a310f88.jpg"
+						}
+					]
+				},
+				"description": "It returns an error if the request format is valid, but the URL is invalid or does not reference an actual image"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
