@@ -9,16 +9,28 @@ import Jimp = require('jimp');
 // RETURNS
 //    an absolute path to a filtered image locally saved file
 export async function filterImageFromURL(inputURL: string): Promise<string>{
-    return new Promise( async resolve => {
-        const photo = await Jimp.read(inputURL);
+    return new Promise( async (resolve, reject) => {
+        let photo = null;
+        try {
+            photo = await Jimp.read(inputURL);
+        } catch (error) {
+            reject(error);
+        }
+        
         const outpath = '/tmp/filtered.'+Math.floor(Math.random() * 2000)+'.jpg';
-        await photo
-        .resize(256, 256) // resize
-        .quality(60) // set JPEG quality
-        .greyscale() // set greyscale
-        .write(__dirname+outpath, (img)=>{
-            resolve(__dirname+outpath);
-        });
+
+        try {
+            await photo
+                .resize(256, 256) // resize
+                .quality(60) // set JPEG quality
+                .greyscale() // set greyscale
+                .write(__dirname+outpath, (img)=>{
+                    resolve(__dirname+outpath);
+                });
+        } catch (error) {
+            reject(error);
+        }
+        
     });
 }
 
@@ -27,8 +39,18 @@ export async function filterImageFromURL(inputURL: string): Promise<string>{
 // useful to cleanup after tasks
 // INPUTS
 //    files: Array<string> an array of absolute paths to files
-export async function deleteLocalFiles(files:Array<string>){
+export async function deleteLocalFiles(files:Array<string>): Promise<any>{
+    const promises = new Array();
     for( let file of files) {
-        fs.unlinkSync(file);
+        promises.push(new Promise( async (resolve, reject) => {
+            fs.unlink(file, (err) => {
+                if (err) {
+                    resolve(file) // TODO log for future deleting task
+                    return
+                }
+                resolve();
+            });
+        }));
     }
+    return Promise.all(promises);
 }
